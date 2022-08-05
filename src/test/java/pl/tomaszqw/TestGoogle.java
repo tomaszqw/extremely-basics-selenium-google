@@ -10,7 +10,6 @@ import org.junit.Test;
 import org.junit.rules.TestName;
 import org.openqa.selenium.WebDriver;
 import pl.tomaszqw.driver_setup.SetupDriver;
-import pl.tomaszqw.driver_setup.TestDataProperties;
 import pl.tomaszqw.pages.GoogleStartPage;
 import pl.tomaszqw.utils.Utils;
 
@@ -23,13 +22,13 @@ public class TestGoogle {
     GoogleStartPage googleStartPage;
 
     @BeforeClass
-    public static void clearData() throws IOException {
+    public static void clearData() {
         Utils.clearData();
     }
 
     @Before
     public void init() throws IOException {
-        this.webDriver = SetupDriver.getDriver(new TestDataProperties().getBrowserType());
+        this.webDriver = SetupDriver.getDriver();
         this.googleStartPage = new GoogleStartPage(webDriver);
     }
 

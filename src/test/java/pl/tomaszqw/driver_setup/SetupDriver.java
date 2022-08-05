@@ -17,7 +17,14 @@ public class SetupDriver {
     TestDataProperties testDataProperties = new TestDataProperties();
 
 
-    private SetupDriver(BrowserName browserName) throws IOException {
+    private SetupDriver() throws IOException {
+        BrowserName browserName;
+        if (System.getProperty("browser")==null) {
+            browserName = testDataProperties.getBrowserType();
+        } else {
+            browserName = BrowserName.valueOf(System.getProperty("browser"));
+        }
+
         switch (browserName) {
             case edge:
                 System.setProperty("webdriver.edge.driver", testDataProperties.getLocalEdgePath());
@@ -40,8 +47,8 @@ public class SetupDriver {
         return webDriver;
     }
 
-    public static WebDriver getDriver(BrowserName browserName) throws IOException {
-        webDriver = new SetupDriver(browserName).getWebDriver();
+    public static WebDriver getDriver() throws IOException {
+        webDriver = new SetupDriver().getWebDriver();
         webDriver.manage().window().maximize();
         return webDriver;
     }

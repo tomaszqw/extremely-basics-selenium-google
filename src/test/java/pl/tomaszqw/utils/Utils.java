@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public class Utils {
 
-    static String screenshotsDirectory = "./screenshots/";
+    static String screenshotsDirectory = "./target/site/";
 
     public static void takeScreenshot(WebDriver webDriver, String testName) throws IOException {
         File screenShotFile = ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.FILE);
@@ -22,7 +22,7 @@ public class Utils {
 
     }
 
-    public static void clearData() throws IOException {
-        FileUtils.cleanDirectory(new File(screenshotsDirectory));
+    public static void clearData() {
+        System.out.println("Clear data");
     }
 }
