@@ -10,16 +10,12 @@ import java.io.IOException;
 
 public class Utils {
 
-    static String screenshotsDirectory = "./target/site/";
+    static String screenshotsDirectory = "./target/surefire-reports/screenshots/";
 
     public static void takeScreenshot(WebDriver webDriver, String testName) throws IOException {
         File screenShotFile = ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.FILE);
         FileUtils.copyFile(screenShotFile,
-                new File(screenshotsDirectory + testName + "-" + screenShotFile.lastModified()+ ".png"));
-    }
-
-    public static void takeScreenshotWhenTestFailed(WebDriver webDriver) {
-
+                new File(screenshotsDirectory + testName + "-" + screenShotFile.lastModified() + ".png"));
     }
 
     public static void clearData() {

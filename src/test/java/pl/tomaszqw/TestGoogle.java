@@ -1,23 +1,21 @@
 package pl.tomaszqw;
 
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TestName;
 import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 import pl.tomaszqw.driver_setup.SetupDriver;
 import pl.tomaszqw.pages.GoogleStartPage;
 import pl.tomaszqw.utils.Utils;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
 
 public class TestGoogle {
-    @Rule
-    public TestName testName = new TestName();
+
     WebDriver webDriver;
     GoogleStartPage googleStartPage;
 
@@ -26,13 +24,13 @@ public class TestGoogle {
         Utils.clearData();
     }
 
-    @Before
+    @BeforeMethod
     public void init() throws IOException {
         this.webDriver = SetupDriver.getDriver();
         this.googleStartPage = new GoogleStartPage(webDriver);
     }
 
-    @Test
+    @Test(testName = "Search ing google phrase: Quality Assurance")
     public void searchPhraseInGoogle() {
         String expectedTitle = "Quality Assurance - Szukaj w Google";
         String title = googleStartPage
@@ -45,7 +43,7 @@ public class TestGoogle {
 
     }
 
-    @Test
+    @Test(testName = "Search ing google phrase: Quality Control")
     public void declineCookiesInGoogle() {
         String expectedTitle = "Quality Control - Szukaj w Google";
         String title = googleStartPage
@@ -57,9 +55,9 @@ public class TestGoogle {
         Assert.assertEquals(title, expectedTitle);
     }
 
-    @After
-    public void teardown() throws IOException {
-        Utils.takeScreenshot(webDriver, testName.getMethodName());
+    @AfterMethod
+    public void teardown(Method method) throws IOException {
+        Utils.takeScreenshot(webDriver, method.getName());
         webDriver.quit();
     }
 }
